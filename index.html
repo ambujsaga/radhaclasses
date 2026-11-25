@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radha Classes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a phone-shaped app launch screen centered on a dark stage (full-screen on real phones): status bar, app bar, app icon, headline, flip countdown, progress, locked tab bar. */
+:root{
+  --navy:#0e1b3d;
+  --navy-2:#16275a;
+  --saffron:#ff8a1f;
+  --sun:#ffd166;
+  --paper:#f4f1ea;
+  --mute:#aab4d4;
+  --stage:#070d1f;
+  --display:"Bricolage Grotesque","Hind",system-ui,sans-serif;
+  --body:"Hind",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:radial-gradient(1200px 700px at 50% 30%,#14255a 0,var(--stage) 70%);color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%;display:grid;place-items:center;overflow:hidden}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:6px}
+
+/* ---------- phone shell ---------- */
+.phone{position:relative;width:min(390px,100%);height:min(800px,calc(100dvh - 28px));background:#03060f;border-radius:52px;padding:10px;box-shadow:0 0 0 2px #26325c,0 40px 90px rgba(0,0,0,.65),0 0 120px rgba(255,138,31,.12);animation:phoneIn .9s cubic-bezier(.2,.9,.3,1) both}
+@keyframes phoneIn{from{opacity:0;transform:translateY(60px) scale(.94) rotate(-1.5deg)}to{opacity:1;transform:none}}
+.screen{position:relative;height:100%;border-radius:42px;overflow:hidden;background:var(--navy);display:flex;flex-direction:column;isolation:isolate}
+.island{position:absolute;top:10px;left:50%;width:104px;height:28px;margin-left:-52px;background:#000;border-radius:20px;z-index:10}
+
+/* ---------- background inside screen ---------- */
+.bg{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);will-change:transform}
+.o1{width:300px;height:300px;background:#ff8a1f;top:-90px;left:-80px;opacity:.55;animation:drift1 14s ease-in-out infinite alternate}
+.o2{width:320px;height:320px;background:#2f5bff;top:38%;right:-140px;opacity:.5;animation:drift2 18s ease-in-out infinite alternate}
+.o3{width:260px;height:260px;background:#ffd166;bottom:-90px;left:10%;opacity:.28;animation:drift3 16s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(130px,120px) scale(1.2)}}
+@keyframes drift2{to{transform:translate(-140px,-100px) scale(1.15)}}
+@keyframes drift3{to{transform:translate(120px,-120px) scale(1.25)}}
+.float{position:absolute;color:var(--sun);opacity:.3;animation:floaty var(--t,9s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
+.float svg{width:100%;height:100%;display:block;animation:sway var(--s,20s) ease-in-out infinite}
+@keyframes floaty{from{transform:translate(0,0)}to{transform:translate(14px,-34px)}}
+@keyframes sway{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(16deg)}}
+
+/* ---------- status bar ---------- */
+.status{display:flex;align-items:center;justify-content:space-between;padding:16px 28px 0;font-weight:600;font-size:15px;height:48px;flex:none}
+.status .ic{display:flex;gap:6px;align-items:center}
+.status svg{height:12px;width:auto;fill:currentColor}
+
+/* ---------- app bar ---------- */
+.appbar{display:flex;align-items:center;justify-content:flex-end;padding:10px 20px 0;flex:none;animation:fade .8s .3s both}
+.appbar h2{margin:0;font-family:var(--display);font-weight:800;font-size:20px}
+.bell{position:relative;width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.1);display:grid;place-items:center}
+.bell svg{width:20px;height:20px;stroke:var(--paper);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 10%;animation:ring 4s 2s infinite}
+.bell::after{content:"";position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:#e5322d;border:2px solid var(--navy-2)}
+@keyframes ring{0%,8%,100%{transform:rotate(0)}2%{transform:rotate(16deg)}4%{transform:rotate(-14deg)}6%{transform:rotate(8deg)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* ---------- body ---------- */
+.content{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 22px 10px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+.appicon{position:relative;width:88px;height:88px;flex:none;margin:8px 0 14px;animation:iconIn .9s .35s cubic-bezier(.3,1.5,.5,1) both}
+.appicon .tile{position:absolute;inset:0;border-radius:24px;background:linear-gradient(145deg,var(--saffron),#ff5e3a);display:grid;place-items:center;box-shadow:0 14px 30px rgba(255,138,31,.45);animation:bob 3.2s ease-in-out infinite}
+.appicon svg{width:48px;height:48px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.appicon .ring{position:absolute;inset:-10px;border-radius:32px;border:2px solid var(--sun);opacity:0;animation:pulse 2.6s 1.2s infinite}
+.appicon .ring.r2{animation-delay:2s}
+@keyframes iconIn{from{opacity:0;transform:scale(.3) rotate(-30deg)}to{opacity:1;transform:none}}
+@keyframes bob{50%{transform:translateY(-6px) rotate(1.5deg)}}
+@keyframes pulse{0%{opacity:.7;transform:scale(.9)}100%{opacity:0;transform:scale(1.35)}}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--navy);background:var(--sun);padding:4px 13px;border-radius:999px;animation:rise .7s .6s cubic-bezier(.2,.8,.2,1) both}
+.pill i{width:8px;height:8px;border-radius:50%;background:#e5322d;box-shadow:0 0 0 0 rgba(229,50,45,.7);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(229,50,45,0)}100%{box-shadow:0 0 0 0 rgba(229,50,45,0)}}
+h1{font-family:var(--display);font-weight:800;font-size:31px;line-height:1.08;margin:14px 0 8px;text-wrap:balance}
+h1 .w{display:inline-block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.7s + var(--i) * .1s)}
+h1 .app{background:linear-gradient(100deg,var(--saffron),var(--sun),#fff,var(--saffron));background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise .9s 1s cubic-bezier(.2,.8,.2,1) both,shine 3.5s 2s linear infinite}
+@keyframes shine{to{background-position:-250% 0}}
+@keyframes rise{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
+.tag{position:relative;overflow:hidden;width:100%;margin:18px 0 6px;padding:12px 14px 10px;border-radius:16px;text-align:center;background:linear-gradient(110deg,rgba(255,138,31,.28),rgba(255,209,102,.10));border:1px solid rgba(255,209,102,.45);box-shadow:0 8px 26px rgba(255,138,31,.2);animation:rise .8s 2.1s both}
+.tag b{display:block;font-family:var(--display);font-weight:800;font-size:23px;line-height:1.18;color:var(--sun);text-wrap:balance;text-shadow:0 0 20px rgba(255,138,31,.6)}
+.tag .author{display:block;margin-top:10px;text-align:right;font-size:13px;font-weight:500;color:var(--paper);opacity:.85}
+.tag::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.25),transparent 65%);transform:translateX(-120%);animation:sweep 3.6s 3.4s infinite;pointer-events:none}
+
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%}
+.cell{position:relative;background:rgba(22,39,90,.8);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 4px 8px;overflow:hidden;animation:pop .7s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(1.4s + var(--i) * .1s)}
+.cell::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.08)}
+.num{display:block;height:1.05em;font-family:var(--display);font-weight:800;font-size:32px;line-height:1.05;font-variant-numeric:tabular-nums;overflow:hidden}
+.num span{display:block}
+.num.flip span{animation:flipIn .45s cubic-bezier(.2,.9,.3,1)}
+@keyframes flipIn{from{transform:translateY(-100%);opacity:0}to{transform:none;opacity:1}}
+.cell small{display:block;margin-top:6px;color:var(--mute);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+@keyframes pop{from{opacity:0;transform:scale(.6) translateY(24px)}to{opacity:1;transform:none}}
+.bar{width:100%;height:8px;border-radius:99px;background:rgba(255,255,255,.12);margin-top:16px;overflow:hidden;animation:rise .8s 1.9s both}
+.bar i{display:block;height:100%;width:var(--p,0%);border-radius:99px;background:linear-gradient(90deg,var(--saffron),var(--sun));transform-origin:left;animation:grow 1.6s 2s cubic-bezier(.2,.8,.2,1) both;position:relative;overflow:hidden}
+.bar i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.7),transparent 70%);transform:translateX(-100%);animation:sweep 2.4s 3.5s infinite}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes sweep{to{transform:translateX(100%)}}
+.when{margin:10px 0 0;color:var(--mute);font-size:14px;animation:rise .8s 1.9s both}
+.when b{color:var(--sun);font-weight:600}
+.live{display:none;width:100%;background:var(--saffron);color:var(--navy);border-radius:16px;padding:16px 18px;font-family:var(--display);font-weight:800;font-size:22px;animation:pop .7s both}
+.is-live .count,.is-live .when,.is-live .bar{display:none}
+.is-live .live{display:block}
+
+.from{flex:none;text-align:center;padding:4px 0 10px;font-size:13px;color:var(--mute);animation:rise .8s 2.4s both}
+.from a{color:var(--saffron);font-family:var(--display);font-weight:800;font-size:15px;text-decoration:none;margin-left:3px;padding:2px 4px;border-radius:6px;transition:color .2s}
+.from a:hover{color:var(--sun);text-decoration:underline}
+/* ---------- tab bar (locked until launch) ---------- */
+.tabs{flex:none;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 10px 22px;background:rgba(8,14,36,.85);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);animation:tabIn .8s 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes tabIn{from{transform:translateY(100%)}to{transform:none}}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#5d6a95}
+.tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{color:var(--saffron)}
+.tab.on svg{animation:bob 2.4s ease-in-out infinite}
+.home-bar{position:absolute;bottom:7px;left:50%;width:118px;height:4px;margin-left:-59px;border-radius:4px;background:rgba(255,255,255,.55)}
+
+/* ---------- popup sheet ---------- */
+button.tab,button.bell{border:0;font:inherit;cursor:pointer;background:none;color:inherit;padding:0;-webkit-tap-highlight-color:transparent;transition:transform .15s,color .2s}
+button.tab{color:#5d6a95;font-size:11px;font-weight:600;padding:4px 0}
+button.tab.on{color:var(--saffron)}
+button.tab:active,button.bell:active{transform:scale(.88)}
+button.bell{background:rgba(255,255,255,.1)}
+.overlay{position:absolute;inset:0;z-index:20;display:flex;align-items:flex-end;background:rgba(3,6,15,.62);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.overlay.open{opacity:1;visibility:visible;transition:opacity .3s}
+.sheet{position:relative;width:100%;background:var(--navy-2);border:1px solid rgba(255,255,255,.12);border-bottom:0;border-radius:28px 28px 0 0;padding:14px 22px calc(env(safe-area-inset-bottom) + 30px);transform:translateY(100%);transition:transform .55s cubic-bezier(.2,1.1,.3,1)}
+.overlay.open .sheet{transform:none}
+.grab{display:block;width:44px;height:5px;border-radius:5px;background:rgba(255,255,255,.25);margin:0 auto 14px}
+.x{position:absolute;top:14px;right:16px;width:34px;height:34px;border-radius:12px;border:0;background:rgba(255,255,255,.1);color:var(--paper);font-size:22px;line-height:1;cursor:pointer}
+.sheet h3{margin:0 0 12px;font-family:var(--display);font-weight:800;font-size:22px}
+.term{background:#070d1f;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;min-height:104px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;line-height:1.6;color:#8df0b0;white-space:pre-wrap;word-break:break-word}
+.caret{display:inline-block;width:8px;height:15px;margin-left:2px;vertical-align:-2px;background:#8df0b0;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.note{margin-top:14px;position:relative;overflow:hidden;padding:12px 14px;border-radius:14px;font-family:var(--display);font-weight:800;font-size:19px;color:var(--sun);text-align:center;background:linear-gradient(110deg,rgba(255,138,31,.3),rgba(255,209,102,.12));border:1px solid rgba(255,209,102,.5);text-shadow:0 0 18px rgba(255,138,31,.6);opacity:0;transform:translateY(14px) scale(.96);transition:opacity .5s,transform .5s cubic-bezier(.3,1.5,.5,1)}
+.sheet.done .note{opacity:1;transform:none}
+.note::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.25),transparent 65%);transform:translateX(-120%);animation:sweep 3s 1s infinite;pointer-events:none}
+
+.confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:50;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* real phones: full-screen app, no device frame */
+@media (max-width:480px){
+  body{display:block;background:var(--navy)}
+  .phone{width:100%;height:100dvh;border-radius:0;padding:0;box-shadow:none;animation:none}
+  .screen{border-radius:0}
+  .island,.status{display:none}
+  .appbar{padding-top:calc(env(safe-area-inset-top) + 18px)}
+  .tabs{padding-bottom:calc(env(safe-area-inset-bottom) + 14px)}
+  .home-bar{display:none}
+}
+@media (max-height:640px){
+  .appicon{width:68px;height:68px;margin:2px 0 8px}
+  .appicon svg{width:36px;height:36px}
+  h1{font-size:26px;margin:8px 0 6px}
+  .tag{margin-bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="phone">
+ <div class="screen" id="root">
+  <div class="bg" aria-hidden="true">
+    <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+    <div class="float" style="left:8%;top:58%;width:40px;height:40px;--t:8s;--s:18s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H12v15h6.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg></div>
+    <div class="float" style="right:8%;top:22%;width:34px;height:34px;--t:10s;--s:22s;--dl:-3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l1.5-5L16 3.5l4.5 4.5L9 19.5z"/><path d="M14 5.5l4.5 4.5"/></svg></div>
+    <div class="float" style="left:14%;top:20%;width:26px;height:26px;--t:7s;--s:14s;--dl:-2s"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z"/></svg></div>
+    <div class="float" style="right:10%;top:66%;width:44px;height:44px;--t:11s;--s:26s;--dl:-5s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+    <div class="float" style="left:48%;top:46%;width:24px;height:24px;--t:9s;--s:16s;--dl:-6s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M3 12h18"/></svg></div>
+  </div>
+
+  <div class="island" aria-hidden="true"></div>
+  <div class="status" aria-hidden="true">
+    <span id="clock">9:41</span>
+    <span class="ic">
+      <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="24" y="4" width="2" height="4" rx="1" opacity=".5"/></svg>
+    </span>
+  </div>
+
+  <div class="appbar">
+    <button type="button" class="bell" id="bellBtn" data-name="Notifications" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 20a1.9 1.9 0 0 0 3.4 0"/></svg></button>
+  </div>
+
+  <main class="content">
+    <div class="appicon" aria-hidden="true">
+      <span class="ring"></span><span class="ring r2"></span>
+      <div class="tile"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div>
+    </div>
+    <span class="pill"><i></i>Coming Soon</span>
+    <h1><span class="w" style="--i:0">Radha</span> <span class="w" style="--i:1">Classes</span> <span class="w app" style="--i:2">App</span> <span class="w" style="--i:3">is</span> <span class="w" style="--i:4">launching</span> <span class="w" style="--i:5">soon</span></h1>
+
+    <div class="count" id="count" role="timer" aria-label="App launch countdown">
+      <div class="cell" style="--i:0"><div class="num" id="d"><span>--</span></div><small>Days</small></div>
+      <div class="cell" style="--i:1"><div class="num" id="h"><span>--</span></div><small>Hours</small></div>
+      <div class="cell" style="--i:2"><div class="num" id="m"><span>--</span></div><small>Mins</small></div>
+      <div class="cell" style="--i:3"><div class="num" id="s"><span>--</span></div><small>Secs</small></div>
+    </div>
+    <div class="bar" id="bar" aria-hidden="true"><i></i></div>
+    <p class="when">Launching <b>20 December 2026</b></p>
+    <div class="live" id="live">The app is now live. Download now!</div>
+    <div class="tag"><b>Because of Today, Tomorrow will be Better.</b><span class="author">Author :- Shrikesh Vishwakarma</span></div>
+  </main>
+  <div class="from">from <a href="https://reeworld.vercel.app" target="_blank" rel="noopener noreferrer">ree</a></div>
+
+  <nav class="tabs" aria-label="App navigation">
+    <button type="button" class="tab on" data-name="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Home</button>
+    <button type="button" class="tab" data-name="Classes"><svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H12v15h6.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>Classes</button>
+    <button type="button" class="tab" data-name="Notes"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Notes</button>
+    <button type="button" class="tab" data-name="Profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</button>
+  </nav>
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <span class="grab"></span>
+      <button type="button" class="x" id="closeBtn" aria-label="Close">&times;</button>
+      <h3 id="sheetTitle">Home</h3>
+      <div class="term" aria-live="polite"><span id="typed"></span><i class="caret"></i></div>
+      <div class="note"><b>Note:</b> App is preparing</div>
+    </div>
+  </div>
+  <div class="home-bar" aria-hidden="true"></div>
+ </div>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* status bar clock */
+  var clock = document.getElementById("clock");
+  function setClock(){
+    var d = new Date(), h = d.getHours() % 12 || 12, m = d.getMinutes();
+    clock.textContent = h + ":" + (m < 10 ? "0" + m : m);
+  }
+  setClock(); setInterval(setClock, 15000);
+
+  /* countdown to 20 Dec 2026, 00:00 India time */
+  var target = new Date("2026-12-20T00:00:00+05:30").getTime();
+  var start = new Date("2026-11-25T00:00:00+05:30").getTime();
+  var root = document.getElementById("root");
+  var ids = ["d","h","m","s"], nodes = {}, last = {};
+  ids.forEach(function(k){ nodes[k] = document.getElementById(k); });
+  function pad(n){ return n < 10 ? "0" + n : "" + n; }
+  function set(k, v){
+    if (last[k] === v) return;
+    var first = last[k] === undefined;
+    last[k] = v;
+    var n = nodes[k];
+    n.innerHTML = "<span>" + v + "</span>";
+    if (!first && !reduce){ n.classList.remove("flip"); void n.offsetWidth; n.classList.add("flip"); }
+  }
+  var bar = document.getElementById("bar");
+  function burst(){
+    if (reduce) return;
+    var colors = ["#ff8a1f","#ffd166","#ffffff","#2f5bff"];
+    for (var i = 0; i < 90; i++){
+      var c = document.createElement("i");
+      c.className = "confetti";
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.background = colors[i % colors.length];
+      c.style.animationDuration = (2.5 + Math.random() * 3) + "s";
+      c.style.animationDelay = (Math.random() * 1.2) + "s";
+      document.body.appendChild(c);
+    }
+  }
+  function tick(){
+    var now = Date.now(), diff = target - now;
+    if (diff <= 0){ root.classList.add("is-live"); burst(); return false; }
+    var sec = Math.floor(diff / 1000);
+    set("d", "" + Math.floor(sec / 86400));
+    set("h", pad(Math.floor(sec % 86400 / 3600)));
+    set("m", pad(Math.floor(sec % 3600 / 60)));
+    set("s", pad(sec % 60));
+    var p = Math.min(100, Math.max(3, (now - start) / (target - start) * 100));
+    bar.style.setProperty("--p", p.toFixed(1) + "%");
+    return true;
+  }
+  if (tick()){ var t = setInterval(function(){ if (!tick()) clearInterval(t); }, 1000); }
+
+  /* popup with typing animation */
+  var overlay = document.getElementById("overlay"), sheet = document.getElementById("sheet");
+  var typed = document.getElementById("typed"), titleEl = document.getElementById("sheetTitle");
+  var closeBtn = document.getElementById("closeBtn");
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var token = 0, opener = null;
+  function setActive(name){ tabs.forEach(function(t){ t.classList.toggle("on", t.getAttribute("data-name") === name); }); }
+  function openSheet(btn){
+    var name = btn.getAttribute("data-name");
+    opener = btn; token++;
+    var my = token;
+    titleEl.textContent = name;
+    typed.textContent = "";
+    sheet.classList.remove("done");
+    overlay.classList.add("open");
+    overlay.setAttribute("aria-hidden", "false");
+    if (btn.classList.contains("tab")) setActive(name);
+    var lines = ["> Opening " + name + "...", "> Setting up your learning space...", "> Almost there..."];
+    if (reduce){ typed.textContent = lines.join("\n"); sheet.classList.add("done"); }
+    else {
+      var li = 0, ci = 0;
+      (function step(){
+        if (my !== token) return;
+        if (li >= lines.length){ sheet.classList.add("done"); return; }
+        var line = lines[li];
+        if (ci < line.length){ typed.textContent += line.charAt(ci++); setTimeout(step, 30 + Math.random() * 35); }
+        else { typed.textContent += "\n"; li++; ci = 0; setTimeout(step, 380); }
+      })();
+    }
+    setTimeout(function(){ closeBtn.focus(); }, 60);
+  }
+  function closeSheet(){
+    token++;
+    overlay.classList.remove("open");
+    overlay.setAttribute("aria-hidden", "true");
+    setActive("Home");
+    if (opener) opener.focus();
+  }
+  Array.prototype.slice.call(document.querySelectorAll("[data-name]")).forEach(function(b){
+    b.addEventListener("click", function(){ openSheet(b); });
+  });
+  closeBtn.addEventListener("click", closeSheet);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) closeSheet(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && overlay.classList.contains("open")) closeSheet(); });
+})();
+</script>
+</body>
+</html>
